@@ -32,3 +32,15 @@ console.log(`Your name is ${user2}`);
         console.log(" You did not put in a valid response");
     }
 }`
+
+We set up the symbol picking feature to go off of what the first user picks. 
+
+We set up a game board with 3 arrays for 3 rows of squares to play tic tac.
+ 
+ Each spot on the board is represented by a number.
+
+ We started a pick square function for player 1 to make his selection on the board. we used 3 conditional statements to determine where the selection will be placed.
+
+ We set up the player turn loop to have the game run, each player is asked to pick a spot on the board and place their symbol on the board.
+
+* add a randomizer to figure out who who goes first *
