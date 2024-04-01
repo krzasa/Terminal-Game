@@ -44,34 +44,57 @@ const bottomRow = [7, 8, 9]
 
 // This shows the gameboard
 const showGameBoard = () => {
-    console.log(topRow);
-    console.log(midRow);
-    console.log(bottomRow);
+    console.log(...topRow);
+    console.log(...midRow);
+    console.log(...bottomRow);
 }
 
+console.clear()
 showGameBoard()
+const takenTurns = []
+const stringDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+let isWinner = false;
+let Winner;
+let turn = 0;
 
 // This is the feature for picking the square
 const pickSquare = () => {
-    let turn = 0;
-    let choice 
-    const takenTurns = []
     if (turn === 0){
-        choice = prompt("Player 1, please pick an unused square by entering a number from 1 to 9: ")
+        let choice; 
+        while(!stringDigits.includes(choice)){
+            if (choice === 'exit') {
+                console.clear()
+                process.exit()
+            }
+            choice = prompt("X, please pick an unused square by entering a number from 1 to 9: ")
+        }
+        while(takenTurns.includes(choice)){
+            choice = prompt("Sorry X, that number has already been taken, please choose another number from 1 to 9: ")
+        }
         if (choice >= 1 && choice <=3){
             topRow[choice - 1] = 'X'
-        }
-        if (choice >= 4 && choice <= 6){
+        } else if (choice >= 4 && choice <= 6){
             midRow[choice - 4] = 'X'
-        }
-        if (choice >= 7 && choice <= 9){
+        } else {
             bottomRow[choice - 7] = 'X'
-        }
-        turn = 1;
+        } 
+        console.clear()
         showGameBoard()
-    }
-    if (turn === 1){
-        choice = prompt("Player 2, please pick an unused square by entering a number from 1 to 9: ")
+        checkWinner()
+        turn = 1;
+        takenTurns.push(choice)
+    } else if (turn === 1){
+        let choice; 
+        while(!stringDigits.includes(choice)){
+            if (choice === 'exit') {
+                console.clear()
+                process.exit()
+            }
+            choice = prompt("0, please pick an unused square by entering a number from 1 to 9: ")
+        }
+        while(takenTurns.includes(choice)){
+            choice = prompt("Sorry 0, that number has already been taken, please choose another number from 1 to 9: ")
+        }
         if (choice >= 1 && choice <=3){
             topRow[choice - 1] = 'O'
         }
@@ -81,17 +104,48 @@ const pickSquare = () => {
         if (choice >= 7 && choice <= 9){
             bottomRow[choice - 7] = 'O'
         }
-        turn = 0;
+        console.clear()
         showGameBoard()
+        checkWinner()
+        turn = 0;
+        takenTurns.push(choice)
     }
 }
 
+const checkWinner = () => {
+    if (
+        topRow.every(x => x === 'X') 
+        || midRow.every(x => x === 'X') 
+        || bottomRow.every(x => x === 'X')
+        || (topRow[0] === 'X' && midRow[0] === 'X' && bottomRow[0] === 'X') // left column
+        || (topRow[1] === 'X' && midRow[1] === 'X' && bottomRow[1] === 'X') // middle column
+        || (topRow[2] === 'X' && midRow[2] === 'X' && bottomRow[2] === 'X') // right column
+        || (topRow[0] === 'X' && midRow[1] === 'X' && bottomRow[2] === 'X') // diagonal
+        || (topRow[2] === 'X' && midRow[1] === 'X' && bottomRow[0] === 'X') // diagonal
+    ){
+        console.log('X is the winner');
+        process.exit()
+    } else if (
+        topRow.every(x => x === 'O') 
+        || midRow.every(x => x === 'O') 
+        || bottomRow.every(x => x === 'O')
+        || (topRow[0] === 'O' && midRow[0] === 'O' && bottomRow[0] === 'O') // left column
+        || (topRow[1] === 'O' && midRow[1] === 'O' && bottomRow[1] === 'O') // middle column
+        || (topRow[2] === 'O' && midRow[2] === 'O' && bottomRow[2] === 'O') // right column
+        || (topRow[0] === 'O' && midRow[1] === 'O' && bottomRow[2] === 'O') // diagonal
+        || (topRow[2] === 'O' && midRow[1] === 'O' && bottomRow[0] === 'O') // diagonal
+    ){
+        console.log('O is the winner');
+        process.exit()
+    }
+}
 // pickSquare()
 
 const playGame = () => {
- for(let i = 0; i < 9; i++){
-    pickSquare()
- }   
+    while (isWinner === false && takenTurns.length < 9){
+        pickSquare()
+    }
+    console.log("Looks like there was no winner.");
 }
 
 playGame()
