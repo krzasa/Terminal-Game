@@ -53,18 +53,45 @@ showGameBoard()
 
 // This is the feature for picking the square
 const pickSquare = () => {
+    let turn = 0;
     let choice 
-    choice = prompt("Please pick a square by entering a number from 1 to 9: ")
-    if (choice >= 1 && choice <=3){
-        topRow[choice - 1] = 'X'
+    const takenTurns = []
+    if (turn === 0){
+        choice = prompt("Player 1, please pick an unused square by entering a number from 1 to 9: ")
+        if (choice >= 1 && choice <=3){
+            topRow[choice - 1] = 'X'
+        }
+        if (choice >= 4 && choice <= 6){
+            midRow[choice - 4] = 'X'
+        }
+        if (choice >= 7 && choice <= 9){
+            bottomRow[choice - 7] = 'X'
+        }
+        turn = 1;
+        showGameBoard()
     }
-    if (choice >= 4 && choice <= 6){
-        midRow[choice - 1] = 'X'
+    if (turn === 1){
+        choice = prompt("Player 2, please pick an unused square by entering a number from 1 to 9: ")
+        if (choice >= 1 && choice <=3){
+            topRow[choice - 1] = 'O'
+        }
+        if (choice >= 4 && choice <= 6){
+            midRow[choice - 4] = 'O'
+        }
+        if (choice >= 7 && choice <= 9){
+            bottomRow[choice - 7] = 'O'
+        }
+        turn = 0;
+        showGameBoard()
     }
-    if (choice >= 7 && choice <= 9){
-        bottomRow[choice - 1] = 'X'
-    }
-    showGameBoard()
 }
 
-pickSquare()
+// pickSquare()
+
+const playGame = () => {
+ for(let i = 0; i < 9; i++){
+    pickSquare()
+ }   
+}
+
+playGame()
