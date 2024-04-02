@@ -35,16 +35,6 @@ const userSymCall = () => {                     // this is the function to let u
 }
 ```
 
-3. We added a randomizer to randomly decide whether 'X' or 'O' goes first.
-
-```
-const randomizer = () => { // this is the function to determine who goes first
-    turn = Math.floor(Math.random() * 2) ;
-   
-    }
-
-```
-
 3. We set up the symbol picking feature to go off of what the first user picks. 
 
 We set up a game board with 3 arrays for 3 rows of squares to play tic tac.
@@ -56,3 +46,13 @@ We set up a game board with 3 arrays for 3 rows of squares to play tic tac.
  We set up the player turn loop to have the game run, each player is asked to pick a spot on the board and place their symbol on the board.
 
 * a dd a randomizer to figure out who who goes first *
+
+3. We added a randomizer to randomly decide whether 'X' or 'O' goes first.
+
+```
+const randomizer = () => { // this is the function to determine who goes first
+    turn = Math.floor(Math.random() * 2) ;
+   
+    }
+
+```
