@@ -25,6 +25,48 @@ const randomizer = () => { // this is the function to determine who goes first
    
     }
 
+    const checkWinner = () => { 
+
+        if (
+            (topRow[0]=== "X" && topRow[1]=== "X" && topRow[2]=== "X")  // check for 3 in a row for first row
+            ||
+            (midRow[0]=== "X" && midRow[1]=== "X" && midRow[2]=== "X")  //  check for 3 in a row for 2nd row
+            ||
+            (bottomRow[0]=== "X" && bottomRow[1]=== "X" && bottomRow[2]=== "X")  // check for 3 in a row for 3rd row
+            || 
+            (topRow[0]=== "X" && midRow[0]=== "X" && bottomRow[0]=== "X")//check left column
+            ||
+            (topRow[1]=== "X" && midRow[1]=== "X" && bottomRow[1]=== "X")//check middle column
+            ||
+            (topRow[2]=== "X" && midRow[2]=== "X" && bottomRow[2]=== "X")//check right column
+            ||
+            (bottomRow[0]=== "X" && midRow[1]=== "X" && topRow[2]=== "X")// check diag left to right from the bottom
+            ||
+            (topRow[0]=== "X" && midRow[1]=== "X" && bottomRow[2]=== "X")//check diag left to right from the top
+            ) { 
+                console.log("X is the winner. "); 
+        } else if (
+            (topRow[0]=== "O" && topRow[1]=== "O" && topRow[2]=== "O")  // check for 3 in a row for first row
+            ||
+            (midRow[0]=== "O" && midRow[1]=== "O" && midRow[2]=== "O")  //  check for 3 in a row for 2nd row
+            ||
+            (bottomRow[0]=== "O" && bottomRow[1]=== "O" && bottomRow[2]=== "O")  // check for 3 in a row for 3rd row
+            || 
+            (topRow[0]=== "O" && midRow[0]=== "O" && bottomRow[0]=== "O")//check left column
+            ||
+            (topRow[1]=== "O" && midRow[1]=== "O" && bottomRow[1]=== "O")//check middle column
+            ||
+            (topRow[2]=== "O" && midRow[2]=== "O" && bottomRow[2]=== "O")//check right column
+            ||
+            (bottomRow[0]=== "O" && midRow[1]=== "O" && topRow[2]=== "O")// check diag left to right from the bottom
+            ||
+            (topRow[0]=== "O" && midRow[1]=== "O" && bottomRow[2]=== "O")//check diag left to right from the top
+            ) {
+                console.log("O is the winner. ");
+        }
+    
+    }    
+
 
 const userSymCall = () => { // this is the function to let users pick their symbols 
 
@@ -78,8 +120,9 @@ const pickSquare = () => {
         }
         turn = 1;
         showGameBoard()
+        checkWinner()
     }
-    if (turn === 1){
+    else if (turn === 1){
         choice = prompt("Player 2, please pick an unused square by entering a number from 1 to 9: ")
         if (choice >= 1 && choice <=3){
             topRow[choice - 1] = 'O'
@@ -92,7 +135,9 @@ const pickSquare = () => {
         }
         turn = 0;
         showGameBoard()
+        checkWinner()
     }
+    
 }
 
 pickSquare()
@@ -100,9 +145,13 @@ pickSquare()
 const playGame = () => {   // this is the loop for the player to take turns 
  for(let i = 0; i < 9; i++){
     pickSquare()
+    
  }   
 }
 
 playGame()
 
+// const topRow = [1, 2, 3]
+// const midRow = [4, 5, 6]
+// const bottomRow = [7, 8, 9]
 
