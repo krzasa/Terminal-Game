@@ -1,17 +1,26 @@
 const prompt = require('prompt-sync')();
 
+/**------------------------------------CONSTANCTS---------------------------------------- */
+
 let player1 = {
-    name: 'K',
-    symbol: 'X'
+    name: '',
+    symbol: ''
 }
 let player2 = {
-    name: 'N',
-    symbol: 'O'
+    name: '',
+    symbol: ''
 }
 
 let turn = 0;
+const digits = ['1','2','3','4','5','6','7','8','9']
 
-let digits = ['1','2','3','4','5','6','7','8','9']
+const topRow = [1, 2, 3]
+const midRow = [4, 5, 6]
+const bottomRow = [7, 8, 9]
+
+const selectedNumbers = []
+
+/**---------------------------------FUNCTIONS------------------------------------------- */
 
 const userCall = () => {  // creating a function for asking the name of the players 
     
@@ -25,8 +34,6 @@ const userCall = () => {  // creating a function for asking the name of the play
 
 }
 
-// userCall() 
-
 // This selects a random beginner
 const randomizer = () => { // this is the function to determine who goes first
     turn = Math.floor(Math.random() * 2) ;
@@ -34,7 +41,7 @@ const randomizer = () => { // this is the function to determine who goes first
 
 // This checks the winner
 const checkWinner = () => { 
-
+    
     if (
         (topRow[0]=== player1.symbol && topRow[1]=== player1.symbol && topRow[2]=== player1.symbol)  // check for 3 in a row for first row
         ||
@@ -54,36 +61,35 @@ const checkWinner = () => {
         ) { 
             console.log(`${player1.name} (${player1.symbol}) is the winner. `); 
             process.exit()
-        } else if (
-            (topRow[0]=== player2.symbol && topRow[1]=== player2.symbol && topRow[2]=== player2.symbol)  // check for 3 in a row for first row
-            ||
-            (midRow[0]=== player2.symbol && midRow[1]=== player2.symbol && midRow[2]=== player2.symbol)  //  check for 3 in a row for 2nd row
-            ||
-            (bottomRow[0]=== player2.symbol && bottomRow[1]=== player2.symbol && bottomRow[2]=== player2.symbol)  // check for 3 in a row for 3rd row
-            || 
-            (topRow[0]=== player2.symbol && midRow[0]=== player2.symbol && bottomRow[0]=== player2.symbol)//check left column
-            ||
-            (topRow[1]=== player2.symbol && midRow[1]=== player2.symbol && bottomRow[1]=== player2.symbol)//check middle column
-            ||
-            (topRow[2]=== player2.symbol && midRow[2]=== player2.symbol && bottomRow[2]=== player2.symbol)//check right column
-            ||
-            (bottomRow[0]=== player2.symbol && midRow[1]=== player2.symbol && topRow[2]=== player2.symbol)// check diag left to right from the bottom
-            ||
-            (topRow[0]=== player2.symbol && midRow[1]=== player2.symbol && bottomRow[2]=== player2.symbol)//check diag left to right from the top
-            ) {
-                console.log(`${player2.name} (${player2.symbol}) is the winner. `); 
-                process.exit()
-            }
-            
-        }    
-
-
+    } else if (
+        (topRow[0]=== player2.symbol && topRow[1]=== player2.symbol && topRow[2]=== player2.symbol)  // check for 3 in a row for first row
+        ||
+        (midRow[0]=== player2.symbol && midRow[1]=== player2.symbol && midRow[2]=== player2.symbol)  //  check for 3 in a row for 2nd row
+        ||
+        (bottomRow[0]=== player2.symbol && bottomRow[1]=== player2.symbol && bottomRow[2]=== player2.symbol)  // check for 3 in a row for 3rd row
+        || 
+        (topRow[0]=== player2.symbol && midRow[0]=== player2.symbol && bottomRow[0]=== player2.symbol)//check left column
+        ||
+        (topRow[1]=== player2.symbol && midRow[1]=== player2.symbol && bottomRow[1]=== player2.symbol)//check middle column
+        ||
+        (topRow[2]=== player2.symbol && midRow[2]=== player2.symbol && bottomRow[2]=== player2.symbol)//check right column
+        ||
+        (bottomRow[0]=== player2.symbol && midRow[1]=== player2.symbol && topRow[2]=== player2.symbol)// check diag left to right from the bottom
+        ||
+        (topRow[0]=== player2.symbol && midRow[1]=== player2.symbol && bottomRow[2]=== player2.symbol)//check diag left to right from the top
+        ) {
+            console.log(`${player2.name} (${player2.symbol}) is the winner. `); 
+            process.exit()
+    }
+        
+}    
+         
 const userSymCall = () => { // this is the function to let users pick their symbols 
     
     const xsOrOs = ['X', 'x', 'O', 'o']
-
+    
     let choice;
-
+    
     while (!xsOrOs.includes(choice)){
         
         if (choice === 'exit') {
@@ -93,9 +99,9 @@ const userSymCall = () => { // this is the function to let users pick their symb
         
         choice = prompt(`What is your Symbol ${player1.name}? X or O? `);
     }
-
+    
     player1.symbol = choice;
-
+    
     if (player1.symbol === "X" || player1.symbol === "x" ) {  // checks to see if user inputed lower or uppercase X
         player1.symbol = "X"
         player2.symbol = "O"
@@ -108,13 +114,7 @@ const userSymCall = () => { // this is the function to let users pick their symb
         console.log("You did not put in a valid response");
     }
 }
-
-// userSymCall()
-
-const topRow = [1, 2, 3]
-const midRow = [4, 5, 6]
-const bottomRow = [7, 8, 9]
-
+        
 // This shows the gameboard
 const showGameBoard = () => {
     console.log(...topRow); 
@@ -122,20 +122,14 @@ const showGameBoard = () => {
     console.log(...bottomRow);
 }
 
-console.clear()
-showGameBoard()
-randomizer()
-
-const selectedNumbers = []
-
 // This is the feature for picking the square
 const pickSquare = () => {
     
     if (turn === 0){
         
         let choice;
-
-        while (!digits.includes(choice)){  //While the users choice is not in the selectedNumbers array
+        
+        while (!digits.includes(choice) || selectedNumbers.includes(choice)){
             
             if (choice === 'exit') {
                 console.clear()
@@ -145,14 +139,6 @@ const pickSquare = () => {
             choice = prompt(`${player1.name} (${player1.symbol}) please pick an unused square by entering a number from 1 to 9: `)
         }
         
-        while(selectedNumbers.includes(choice)){
-            if (choice === 'exit') {
-                console.clear()
-                process.exit()
-            }
-            choice = prompt(`Sorry ${player1.name} (${player1.symbol}). That number has already been taken. Please choose an unused number from 1 to 9: `)
-        }
-
         if (choice >= 1 && choice <=3){
             topRow[choice - 1] = player1.symbol;
         }
@@ -167,26 +153,18 @@ const pickSquare = () => {
         selectedNumbers.push(choice)
         showGameBoard()
         checkWinner()
-    
+        
     } else if (turn === 1){
         
         let choice;
-   
-        while (!digits.includes(choice)){  //While thhe users choice is not in the selectedNumbers array
+        
+        while (!digits.includes(choice) || selectedNumbers.includes(choice)){
             
             if (choice === 'exit') {
                 console.clear()
                 process.exit()
             }
             choice = prompt(`${player2.name} (${player2.symbol}), please pick an unused square by entering a number from 1 to 9: `)
-        }
-        
-        while(selectedNumbers.includes(choice)){
-            if (choice === 'exit') {
-                console.clear()
-                process.exit()
-            }
-            choice = prompt(`Sorry ${player2.name} (${player2.symbol}). That number has already been taken. Please choose an unused number from 1 to 9: `)
         }
         
         if (choice >= 1 && choice <=3){
@@ -206,12 +184,19 @@ const pickSquare = () => {
     }    
 }
 
-
 const playGame = () => {   // this is the loop for the player to take turns 
     while(selectedNumbers.length < 9){
         pickSquare()
     }
     console.log("Looks like there wasn't a winner.");   
 }
+/**------------------------------------------------------FUNCTION CALLS-------------------------------------- */
+
+userCall() 
+userSymCall()
+
+console.clear()
+showGameBoard()
+randomizer()
 
 playGame()
