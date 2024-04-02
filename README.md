@@ -101,4 +101,11 @@ const checkWinner = () => {
     }
 
 }
+
 ```
+
+We then started troubleshooting the game app. We figured out that it would become good practice to fix the UI in terms of having the player whose turn it is be shown his name and symbol during theirting turn.
+
+We also added code to validate each of the users prompts. Just in case if they add a weird answer it would just re start the prompt until the prompt gives a valid answer.
+
+At the end we seperated the global values, functions and the function calls in their own containers.
