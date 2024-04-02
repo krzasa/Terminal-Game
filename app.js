@@ -6,6 +6,7 @@ let user2 = ""
 let userSym1 = ""
 let userSym2 = ""
 let turn = 0;
+let digits = [1,2,3,4,5,6,7,8,9]
 
 const userCall = () => {  // creating a function for asking the name of the players 
     
@@ -102,15 +103,23 @@ showGameBoard()
 
 // This is the feature for picking the square
 randomizer()
+const selectedNumbers = []
 
 const pickSquare = () => {
    
     let choice 
-    const takenTurns = []
+    
     if (turn === 0){
-        choice = prompt("Player 1, please pick an unused square by entering a number from 1 to 9: ")
+        while (!selectedNumbers.includes(choice) && digits.includes(choice))  //While thhe users choice is not in the selectedNumbers array
+         {
+           return choice = prompt("Player 1, please pick an unused square by entering a number from 1 to 9: ")
+            //User will be asked for a position
+        }
+        
+
         if (choice >= 1 && choice <=3){
             topRow[choice - 1] = 'X'
+            
         }
         if (choice >= 4 && choice <= 6){
             midRow[choice - 4] = 'X'
@@ -118,12 +127,19 @@ const pickSquare = () => {
         if (choice >= 7 && choice <= 9){
             bottomRow[choice - 7] = 'X'
         }
-        turn = 1;
+        
+        selectedNumbers.push(choice)
         showGameBoard()
         checkWinner()
+        turn = 1;
     }
     else if (turn === 1){
-        choice = prompt("Player 2, please pick an unused square by entering a number from 1 to 9: ")
+        while (!selectedNumbers.includes(choice)  && digits.includes(choice))  //While thhe users choice is not in the selectedNumbers array
+         {
+             return choice = prompt("Player 2, please pick an unused square by entering a number from 1 to 9: ")
+            //User will be asked for a position
+        }
+        
         if (choice >= 1 && choice <=3){
             topRow[choice - 1] = 'O'
         }
@@ -133,9 +149,12 @@ const pickSquare = () => {
         if (choice >= 7 && choice <= 9){
             bottomRow[choice - 7] = 'O'
         }
-        turn = 0;
+        
+        selectedNumbers.push(choice)
+        
         showGameBoard()
         checkWinner()
+        turn = 0;
     }
     
 }
@@ -143,7 +162,7 @@ const pickSquare = () => {
 pickSquare()
 
 const playGame = () => {   // this is the loop for the player to take turns 
- for(let i = 0; i < 9; i++){
+ while( selectedNumbers.length < 9){
     pickSquare()
     
  }   
