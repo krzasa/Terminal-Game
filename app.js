@@ -5,6 +5,7 @@ let user2 = ""
 
 let userSym1 = ""
 let userSym2 = ""
+let turn = 0;
 
 const userCall = () => {  // creating a function for asking the name of the players 
     
@@ -16,7 +17,13 @@ const userCall = () => {  // creating a function for asking the name of the play
 
 }
 
-// userCall() 
+userCall() 
+
+
+const randomizer = () => { // this is the function to determine who goes first
+    turn = Math.floor(Math.random() * 2) ;
+   
+    }
 
 
 const userSymCall = () => { // this is the function to let users pick their symbols 
@@ -36,7 +43,7 @@ const userSymCall = () => { // this is the function to let users pick their symb
     }
 }
 
-// userSymCall()
+userSymCall()
 
 const topRow = [1, 2, 3]
 const midRow = [4, 5, 6]
@@ -44,16 +51,18 @@ const bottomRow = [7, 8, 9]
 
 // This shows the gameboard
 const showGameBoard = () => {
-    console.log(topRow);
-    console.log(midRow);
-    console.log(bottomRow);
+    console.log(...topRow); 
+    console.log(...midRow);
+    console.log(...bottomRow);
 }
 
 showGameBoard()
 
 // This is the feature for picking the square
+randomizer()
+
 const pickSquare = () => {
-    let turn = 0;
+   
     let choice 
     const takenTurns = []
     if (turn === 0){
@@ -86,12 +95,14 @@ const pickSquare = () => {
     }
 }
 
-// pickSquare()
+pickSquare()
 
-const playGame = () => {
+const playGame = () => {   // this is the loop for the player to take turns 
  for(let i = 0; i < 9; i++){
     pickSquare()
  }   
 }
 
 playGame()
+
+
