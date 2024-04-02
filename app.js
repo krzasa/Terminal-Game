@@ -5,8 +5,10 @@ let user2 = ""
 
 let userSym1 = ""
 let userSym2 = ""
+
 let turn = 0;
-let digits = [1,2,3,4,5,6,7,8,9]
+
+let digits = ['1','2','3','4','5','6','7','8','9']
 
 const userCall = () => {  // creating a function for asking the name of the players 
     
@@ -18,14 +20,14 @@ const userCall = () => {  // creating a function for asking the name of the play
 
 }
 
-userCall() 
+// userCall() 
 
-
+// This selects a random beginner
 const randomizer = () => { // this is the function to determine who goes first
     turn = Math.floor(Math.random() * 2) ;
-   
-    }
+}
 
+// This checks the winner
 const checkWinner = () => { 
 
     if (
@@ -46,6 +48,7 @@ const checkWinner = () => {
         (topRow[0]=== "X" && midRow[1]=== "X" && bottomRow[2]=== "X")//check diag left to right from the top
         ) { 
             console.log("X is the winner. "); 
+            process.exit()
     } else if (
         (topRow[0]=== "O" && topRow[1]=== "O" && topRow[2]=== "O")  // check for 3 in a row for first row
         ||
@@ -64,6 +67,7 @@ const checkWinner = () => {
         (topRow[0]=== "O" && midRow[1]=== "O" && bottomRow[2]=== "O")//check diag left to right from the top
         ) {
             console.log("O is the winner. ");
+            process.exit()
     }
 
 }    
@@ -86,7 +90,7 @@ const userSymCall = () => { // this is the function to let users pick their symb
     }
 }
 
-userSymCall()
+// userSymCall()
 
 const topRow = [1, 2, 3]
 const midRow = [4, 5, 6]
@@ -99,27 +103,39 @@ const showGameBoard = () => {
     console.log(...bottomRow);
 }
 
+console.clear()
 showGameBoard()
-
-// This is the feature for picking the square
 randomizer()
+
 const selectedNumbers = []
 
+// This is the feature for picking the square
 const pickSquare = () => {
-   
-    let choice 
     
     if (turn === 0){
-        while (!selectedNumbers.includes(choice) && digits.includes(choice))  //While thhe users choice is not in the selectedNumbers array
-         {
-           return choice = prompt("Player 1, please pick an unused square by entering a number from 1 to 9: ")
-            //User will be asked for a position
+        
+        let choice;
+
+        while (!digits.includes(choice)){  //While the users choice is not in the selectedNumbers array
+            
+            if (choice === 'exit') {
+                console.clear()
+                process.exit()
+            }
+            
+            choice = prompt("Player 1, please pick an unused square by entering a number from 1 to 9: ")
         }
         
+        while(selectedNumbers.includes(choice)){
+            if (choice === 'exit') {
+                console.clear()
+                process.exit()
+            }
+            choice = prompt("Sorry. That number has already been taken. Please choose an unused number from 1 to 9: ")
+        }
 
         if (choice >= 1 && choice <=3){
             topRow[choice - 1] = 'X'
-            
         }
         if (choice >= 4 && choice <= 6){
             midRow[choice - 4] = 'X'
@@ -127,17 +143,32 @@ const pickSquare = () => {
         if (choice >= 7 && choice <= 9){
             bottomRow[choice - 7] = 'X'
         }
-        
+        console.clear()
+        turn = 1;
         selectedNumbers.push(choice)
         showGameBoard()
         checkWinner()
-        turn = 1;
-    }
-    else if (turn === 1){
-        while (!selectedNumbers.includes(choice)  && digits.includes(choice))  //While thhe users choice is not in the selectedNumbers array
-         {
-             return choice = prompt("Player 2, please pick an unused square by entering a number from 1 to 9: ")
-            //User will be asked for a position
+    
+    } else if (turn === 1){
+        
+        let choice;
+
+        
+        while (!digits.includes(choice)){  //While thhe users choice is not in the selectedNumbers array
+            
+            if (choice === 'exit') {
+                console.clear()
+                process.exit()
+            }
+            choice = prompt("Player 2, please pick an unused square by entering a number from 1 to 9: ")
+        }
+        
+        while(selectedNumbers.includes(choice)){
+            if (choice === 'exit') {
+                console.clear()
+                process.exit()
+            }
+            choice = prompt("Sorry. That number has already been taken. Please choose an unused number from 1 to 9: ")
         }
         
         if (choice >= 1 && choice <=3){
@@ -149,28 +180,20 @@ const pickSquare = () => {
         if (choice >= 7 && choice <= 9){
             bottomRow[choice - 7] = 'O'
         }
-        
+        console.clear()
+        turn = 0;
         selectedNumbers.push(choice)
-        
         showGameBoard()
         checkWinner()
-        turn = 0;
-    }
-    
+    }    
 }
 
-pickSquare()
 
 const playGame = () => {   // this is the loop for the player to take turns 
- while( selectedNumbers.length < 9){
-    pickSquare()
-    
- }   
+    while(selectedNumbers.length < 9){
+        pickSquare()
+    }
+    console.log("Looks like there wasn't a winner");   
 }
 
 playGame()
-
-// const topRow = [1, 2, 3]
-// const midRow = [4, 5, 6]
-// const bottomRow = [7, 8, 9]
-
