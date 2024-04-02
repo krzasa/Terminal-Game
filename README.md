@@ -56,3 +56,49 @@ const randomizer = () => { // this is the function to determine who goes first
     }
 
 ```
+
+4. We added a function to check if there was a winner and which player it was after each key entry. 
+
+```
+const checkWinner = () => { 
+
+    if (
+        (topRow[0]=== "X" && topRow[1]=== "X" && topRow[2]=== "X")  // check for 3 in a row for first row
+        ||
+        (midRow[0]=== "X" && midRow[1]=== "X" && midRow[2]=== "X")  //  check for 3 in a row for 2nd row
+        ||
+        (bottomRow[0]=== "X" && bottomRow[1]=== "X" && bottomRow[2]=== "X")  // check for 3 in a row for 3rd row
+        || 
+        (topRow[0]=== "X" && midRow[0]=== "X" && bottomRow[0]=== "X")//check left column
+        ||
+        (topRow[1]=== "X" && midRow[1]=== "X" && bottomRow[1]=== "X")//check middle column
+        ||
+        (topRow[2]=== "X" && midRow[2]=== "X" && bottomRow[2]=== "X")//check right column
+        ||
+        (bottomRow[0]=== "X" && midRow[1]=== "X" && topRow[2]=== "X")// check diag left to right from the bottom
+        ||
+        (topRow[0]=== "X" && midRow[1]=== "X" && bottomRow[2]=== "X")//check diag left to right from the top
+        ) { 
+            console.log("X is the winner. "); 
+    } else if (
+        (topRow[0]=== "O" && topRow[1]=== "O" && topRow[2]=== "O")  // check for 3 in a row for first row
+        ||
+        (midRow[0]=== "O" && midRow[1]=== "O" && midRow[2]=== "O")  //  check for 3 in a row for 2nd row
+        ||
+        (bottomRow[0]=== "O" && bottomRow[1]=== "O" && bottomRow[2]=== "O")  // check for 3 in a row for 3rd row
+        || 
+        (topRow[0]=== "O" && midRow[0]=== "O" && bottomRow[0]=== "O")//check left column
+        ||
+        (topRow[1]=== "O" && midRow[1]=== "O" && bottomRow[1]=== "O")//check middle column
+        ||
+        (topRow[2]=== "O" && midRow[2]=== "O" && bottomRow[2]=== "O")//check right column
+        ||
+        (bottomRow[0]=== "O" && midRow[1]=== "O" && topRow[2]=== "O")// check diag left to right from the bottom
+        ||
+        (topRow[0]=== "O" && midRow[1]=== "O" && bottomRow[2]=== "O")//check diag left to right from the top
+        ) {
+            console.log("O is the winner. ");
+    }
+
+}
+```
